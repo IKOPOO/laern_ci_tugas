@@ -39,7 +39,17 @@ if (session()->getFlashData('success')) {
           <td>
             <img src="<?php echo base_url() . "img/" . $item['options']['foto'] ?>" width="100px">
           </td>
-          <td><?php echo number_to_currency($item['price'], 'IDR') ?></td>
+          <td>
+            <small>
+              <s><?php echo number_to_currency($item['options']['hargaAsli'], 'IDR') ?></s>
+            </small><br>
+            <strong>
+              <?php echo number_to_currency($item['price'], 'IDR') ?>
+            </strong>
+            <span class="text-success">
+               -<?php echo number_to_currency($item['options']['diskon'], 'IDR') ?>
+            </span>
+          </td>
           <td>
             <input
               type="number"

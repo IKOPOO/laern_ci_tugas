@@ -36,7 +36,7 @@ History Transaksi Pembelian <strong><?= $username ?></strong>
                     </tr>
                     <!-- Detail Modal Begin -->
                     <div class="modal fade" id="detailModal-<?= $item['id'] ?>" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width: 630px;">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Detail Data</h5>

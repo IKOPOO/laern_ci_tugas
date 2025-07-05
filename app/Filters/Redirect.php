@@ -20,7 +20,7 @@ class redirect implements FilterInterface
         //something here
         // Do something here
         if (session()->has('isLoggedIn')) {
-            return redirect()->to(site_url('faq'));
+            return redirect()->to(site_url('/'));
         }
     }
 }

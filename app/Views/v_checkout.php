@@ -42,30 +42,42 @@
           </thead>
           <tbody>
             <?php
-            $i = 1;
-            if (!empty($items)) :
-              foreach ($items as $index => $item) :
-                ?>
-                <tr>
-                  <td><?php echo $item['name'] ?></td>
-                  <td><?php echo number_to_currency($item['price'], 'IDR') ?></td>
-                  <td><?php echo $item['qty'] ?></td>
-                  <td><?php echo number_to_currency($item['price'] * $item['qty'], 'IDR') ?></td>
-                </tr>
-                <?php
+              $diskon = session()->get('diskon') ?? 0;
+              $totalDiskon = 0;
+              $grandTotal = 0;
+
+              if (!empty($items)) :
+                foreach ($items as $index => $item) :
+                  $hargaAsli = $item['price'];
+                  $jumlah = $item['qty'];
+                  $hargaSetelahDiskon = max(0, $hargaAsli - $diskon);
+                  $subtotalDiskon = $hargaSetelahDiskon * $jumlah;
+                  $totalDiskon += $diskon * $jumlah;
+                  $grandTotal += $subtotalDiskon;
+              ?>
+            <tr>
+              <td><?= $item['name'] ?></td>
+              <td><?= number_to_currency($hargaAsli, 'IDR') ?></td>
+              <td><?= $jumlah ?></td>
+              <td><?= number_to_currency($diskon, 'IDR') ?></td>
+              <td><?= number_to_currency($subtotalDiskon, 'IDR') ?></td>
+            </tr>
+            <?php
               endforeach;
-            endif;
+              endif;  
             ?>
-              <tr>
-                <td colspan="2"></td>
-                <td>Subtotal</td>
-                <td><?php echo number_to_currency($total, 'IDR') ?></td>
-                </tr>
-              <tr>
-                <td colspan="2"></td>
-                <td>Total</td>
-                <td><span id="total"><?php echo number_to_currency($total, 'IDR') ?></span></td>
-              </tr>
+            <tr>
+                <td colspan="4" class="text-end"><strong>Total Diskon</strong></td>
+                <td><?= number_to_currency($totalDiskon, 'IDR') ?></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-end"><strong>Subtotal</strong></td>
+                <td><?= number_to_currency($grandTotal, 'IDR') ?></td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-end"><strong>Total + Ongkir</strong></td>
+                <td><span id="total"><?= number_to_currency($grandTotal, 'IDR') ?></span></td>
+            </tr>
           </tbody>
         </table>
         <!-- End Default Table Example -->
@@ -141,7 +153,7 @@ $(document).ready(function() {
     hitungTotal();
   });
   function hitungTotal() {
-    total = ongkir + <?= $total ?>;
+    total = ongkir + <?= $grandTotal ?>;
 
     $("#ongkir").val(ongkir);
     $("#total").html("IDR " + total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'));

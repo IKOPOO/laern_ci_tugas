@@ -29,6 +29,19 @@
   }
   ?>
 
+  <?php
+  if(session()-> get("role") == "admin") {
+    ?>
+    <li class="nav-item">
+      <a class="nav-link <?php echo(uri_string() == 'discount') ? "" : "collapsed" ?>" href="discount">
+        <i class="bi bi-receipt"></i>
+        <span>Discount</span>
+      </a>
+  </li><!-- End Discount Nav -->
+  <?php
+  }
+  ?>
+
   <li class="nav-item">
     <a class="nav-link <?php echo(uri_string() == 'profile') ? "" : "collapsed" ?>" href="profile">
       <i class="bi bi-person"></i>

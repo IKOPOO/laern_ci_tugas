@@ -15,7 +15,12 @@
     <button type="submit" title="Search"><i class="bi bi-search"></i></button>
   </form>
 </div><!-- End Search Bar -->
-
+<?php if (session()->has('diskon')): ?>
+  <div class="ms-3 alert alert-success mb-0 py-1 px-3 rounded-pill d-flex align-items-center">
+    <i class="bi bi-tag-fill me-2"></i>
+    <span>Diskon Hari Ini: <strong>Rp <?= number_format(session('diskon'), 0, ',', '.') ?></strong></span>
+  </div>
+<?php endif; ?>
 <nav class="header-nav ms-auto">
   <ul class="d-flex align-items-center">
 
